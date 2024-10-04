@@ -8,14 +8,14 @@ For testing is recommended to use the SStrWithDebugInfo version and then using t
 # Table of contents.  
 [Instalation](#Instalation)  
 [Usage](#Usage)  
-- [SStr structure](##SStr-structure)
-- [Creating a new SStr](##Creating-a-new-SStr)
-- [Writting to the data](##Writting-to-the-SStr)
-  - [overwrite](###overwrite)
-  - [Appending data](###Appending-data)
-    - [Appending a char](####Appending-a-char)
-    - [Appending a string](####Appending-a-string)
-- [Compiling](##Compiling)
+- [SStr structure](#SStr-structure)
+- [Creating a new SStr](#Creating-a-new-SStr)
+- [Writting to the data](#Writting-to-the-SStr)
+  - [overwrite](#overwrite)
+  - [Appending data](#Appending-data)
+    - [Appending a char](#Appending-a-char)
+    - [Appending a string](#Appending-a-string)
+- [Compiling](#Compiling)
   
   
   
@@ -32,7 +32,7 @@ The repository comes with both the SStr and SStrWithDebugInfo, each of these hav
 # Usage  
   
   
-## SStr-structure  
+## SStr structure  
   
 The SStr type has the following values:
   
@@ -53,7 +53,7 @@ SStrFn.get.capacity(my_sstr);
 Each returns the a specific value values.
   
   
-## Creating-a-new-SStr
+## Creating a new SStr
 Suppose the project structure looks like the following:
   
 ```
@@ -87,7 +87,7 @@ int main()
 }
 ```
 
-## Writting-to-the-SStr
+## Writting to the SStr
   
   
 ### overwrite
@@ -126,10 +126,10 @@ int main()
 }
 ```
 
-### Appending-data
+### Appending data
   
   
-#### Appending-a-char
+#### Appending a char
   
 ```c
   SStr* my_sstr = SStrFn.New();
@@ -152,7 +152,7 @@ int main()
 ```
   
   
-#### Appending-a-string
+#### Appending a string
   
 ```c
   SStr* my_sstr = SStrFn.New();
