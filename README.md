@@ -8,13 +8,13 @@ For testing is recommended to use the SStrWithDebugInfo version and then using t
 # Table of contents.  
 [Instalation](#Instalation)  
 [Usage](#Usage)  
- - [SStr structure](##SStr structure)
- - [Creating a new SStr](##Creating a new SStr)
- - [Writting to the data](##Writting to the data)
- -     [overwrite](###overwrite)
- -     [Appending data](###Appending data)
- -         [Appending a char](####Appending a char)
- -         [Appending a string](####Appending a string)
+- [SStr structure](##SStr structure)
+- [Creating a new SStr](##Creating a new SStr)
+- [Writting to the data](##Writting to the data)
+-     [overwrite](###overwrite)
+-     [Appending data](###Appending data)
+-         [Appending a char](####Appending a char)
+-         [Appending a string](####Appending a string)
   
   
   
