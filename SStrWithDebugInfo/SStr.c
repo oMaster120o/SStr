@@ -1,3 +1,5 @@
+//#define SSTR_DEBUG
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -5,6 +7,15 @@
 
 #define DEFAULT_CAPACITY 32
 #define SSTR_ERROR_COLOR  "\e[38;2;255;0;0m"
+
+#ifdef  SSTR_DEBUG
+
+#include <assert.h>
+#define DEBUG_COLOR  "\e[38;2;255;50;0m"
+#define RESET_COLOR  "\e[0m"
+
+#endif
+
 
 typedef struct
 {
@@ -98,6 +109,10 @@ static int8_t SStrFn_Error(void)
 
 static __attribute__((malloc)) SStr* SStrFn_New(void)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_New()\n" RESET_COLOR);
+#endif
+
     SStr* address = (SStr*)malloc(sizeof(SStr));
     if (address == NULL)
     {
@@ -117,13 +132,28 @@ static __attribute__((malloc)) SStr* SStrFn_New(void)
 
 static char* SStrFn_get_data(SStr* sstr_string)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_get_data()\n" RESET_COLOR);
+    assert(sstr_string != NULL);
+#endif
+
     return sstr_string->data;
 }
 
 
 static void SStrFn_clear_data(SStr* sstr_string)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_clear_data():\n" RESET_COLOR);
+    assert(sstr_string != NULL);
+#endif
+
     SStr* REF = sstr_string;
+
+#ifdef SSTR_DEBUG
+    puts("erasing data:\n");
+    printf("old data:%s\n", REF->data);
+#endif
 
     // replace all the data with '\0'.
     for (register size_t indx = REF->length; indx > 0; indx--)
@@ -145,27 +175,53 @@ static void SStrFn_clear_data(SStr* sstr_string)
 
     REF->data = temp_address;
 
+#ifdef SSTR_DEBUG
+    printf("replaced by:%s\n\n\n", REF->data);
+#endif
+
     return;
 }
 
 
 static inline size_t SStrFn_get_length(SStr* sstr_string)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_get_length()\n" RESET_COLOR);
+    assert(sstr_string != NULL);
+#endif
+
     return sstr_string->length;
 }
 
 
 static inline size_t SStrFn_get_capacity(SStr* sstr_string)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_get_capacity()\n" RESET_COLOR);
+    assert(sstr_string != NULL);
+#endif
+
   return sstr_string->capacity;
 }
 
 
 static void SStrFn_copy(SStr* sstr_string, const char* string)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_copy():\n" RESET_COLOR);
+    assert(sstr_string != NULL);
+    assert(string != NULL);
+#endif
+
     SStr*  REF = sstr_string;
 
     size_t _string_len = strlen(string); // string minus null terminator
+
+#ifdef SSTR_DEBUG
+    printf("_string_len:%lu\n",      _string_len);
+    printf("old length:%lu\n",       REF->length);
+    printf("old capacity:%lu\n\n\n", REF->capacity);
+#endif
 
     // if REF capacity is less than length of string + null terminator.
     // reallocate more memory for REF->data making it = (_string_len + null terminator + DEFAULT_CAPACITY) * sizeof(char).
@@ -188,7 +244,19 @@ static void SStrFn_copy(SStr* sstr_string, const char* string)
         REF->data      =  temp_address;
         REF->length    =  _string_len;
         REF->capacity  =  _string_len + DEFAULT_CAPACITY;
+
+#ifdef SSTR_DEBUG
+        puts("reallocated:");
+        printf("\tnew length:%lu\n",   REF->length);
+        printf("\tnew capacity:%lu\n\n\n", REF->capacity);
+        //assert( (REF->length == _string_len) );
+#endif
     }
+
+#ifdef SSTR_DEBUG
+      printf("copying:\nold data:%s\n", REF->data);
+#endif
+
 
     // copy the contents of the string to the REF->data.
     for (register size_t i = 0; i < _string_len; i++)
@@ -199,6 +267,14 @@ static void SStrFn_copy(SStr* sstr_string, const char* string)
 
     REF->length = _string_len;
 
+#ifdef SSTR_DEBUG
+    printf("\tnew data:%s\n\n\n",  REF->data);
+    puts("returning:");
+    assert( (REF->length == _string_len) );
+    printf("\tlength:%lu\n",       REF->length);
+    printf("\tcapacity:%lu\n\n\n", REF->capacity);
+#endif
+
     return;
 }
 
@@ -206,6 +282,11 @@ static void SStrFn_copy(SStr* sstr_string, const char* string)
 
 static void SStrFn_append_chr(SStr* sstr_string, int character)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_append_chr():\n" RESET_COLOR);
+    assert(sstr_string != NULL);
+#endif
+
     if (character == '\0')
     {
       return;
@@ -217,6 +298,10 @@ static void SStrFn_append_chr(SStr* sstr_string, int character)
     {
       REF->capacity += DEFAULT_CAPACITY;
     }
+
+#ifdef SSTR_DEBUG
+      puts("reallocating memory for data:");
+#endif
 
     // realloc to a temporary address.
     char* temp_address = (char*)realloc(REF->data, REF->capacity * sizeof(char));
@@ -231,10 +316,22 @@ static void SStrFn_append_chr(SStr* sstr_string, int character)
         return;
     }
 
+
+#ifdef SSTR_DEBUG
+    puts("\treallocated.");
+#endif
+
     // if realloc succeeds, copy the temporary address to REF->data.
     REF->data = temp_address;
     REF->data[REF->length] = character;
     REF->length += 1;
+
+#ifdef SSTR_DEBUG
+    puts("returning:");
+    printf("\tdata:%s\n",          REF->data);
+    printf("\tlength:%lu\n",       REF->length);
+    printf("\tcapacity:%lu\n\n\n", REF->capacity);
+#endif
 
     return;
 }
@@ -242,6 +339,11 @@ static void SStrFn_append_chr(SStr* sstr_string, int character)
 
 static void SStrFn_Destroy(SStr* sstr_string)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_Destroy()\n" RESET_COLOR);
+    assert(sstr_string != NULL);
+#endif
+  
     SStr* REF = sstr_string;
 
     for (register size_t indx = REF->length; indx > 0; indx--)
@@ -263,6 +365,15 @@ static void SStrFn_Destroy(SStr* sstr_string)
 
 static void SStrFn_append_str(SStr* sstr_string, char* string)
 {
+#ifdef SSTR_DEBUG
+    puts(DEBUG_COLOR "SStrFn_append_str():\n" RESET_COLOR);
+    assert(sstr_string != NULL);
+    assert(string != NULL);
+    printf("old data:%s\n",          sstr_string->data);
+    printf("old length:%lu\n",       sstr_string->length);
+    printf("old capacity:%lu\n\n",   sstr_string->capacity);
+#endif
+
     SStr*  REF        = sstr_string;
     size_t total_size = (REF->length + strlen(string));
 
@@ -272,6 +383,9 @@ static void SStrFn_append_str(SStr* sstr_string, char* string)
       REF->capacity = (total_size + DEFAULT_CAPACITY * 2);
 
       char* temp_address = (char*)realloc(REF->data, REF->capacity * sizeof(char));
+#ifdef SSTR_DEBUG
+      puts("reallocated.\n");
+#endif
       
       if (!temp_address)
       {
@@ -292,6 +406,13 @@ static void SStrFn_append_str(SStr* sstr_string, char* string)
     }
 
     REF->length = (REF->length + strlen(string));
+
+#ifdef SSTR_DEBUG
+    puts("returning:");
+    printf("\tdata:%s\n",      REF->data);
+    printf("\tlength:%lu\n",   REF->length);
+    printf("\tcapacity:%lu\n\n\n", REF->capacity);
+#endif
 
     return;
 }
