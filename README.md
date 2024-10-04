@@ -176,3 +176,25 @@ int main()
   SStrFn.append.str(my_sstr, SStrFn.get.data(SStr_variable));
   if (SStrFn.Error()) return -1;
 ```
+  
+  
+  
+## Compiling
+  
+to compile a project using the library, first it needs to be compiled as an object file, exactly as from /SStr/test/Makefile does. Must also use -Wnonnull compiler flag:
+  
+```
+CC = gcc
+OUTPUT = Test
+CFLAGS = -Wnonnull
+
+all: SStr.o tests.o
+	@${CC} tests.o SStr.o -o ${OUTPUT} ${CFLAGS}
+	@rm ./*.o
+
+tests.o:
+	@${CC} -c tests.c
+
+SStr.o:
+	@${CC} -c ../SStr.c
+```

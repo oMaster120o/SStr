@@ -7,6 +7,7 @@ int main()
 
   SStr* my_sstr = SStrFn.New();
 
+
   SStrFn.copy(my_sstr, "copy test.");
   if (SStrFn.Error()) return 0;
   printf("data: %s\n",        SStrFn.get.data(my_sstr));

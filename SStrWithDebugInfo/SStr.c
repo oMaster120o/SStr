@@ -30,22 +30,22 @@ typedef struct
 {
   SStr*   (*New)        (void);
   int8_t  (*Error)      (void);
-  void    (*Destroy)    (SStr* sstr_string);
+  void    (*Destroy)    (SStr* sstr_string)                     __attribute__((__nonnull__(1)));
 
-  void    (*clear_data) (SStr* sstr_string);
-  void    (*copy)       (SStr* sstr_string, const char* string);
+  void    (*clear_data) (SStr* sstr_string)                     __attribute__((__nonnull__(1)));
+  void    (*copy)       (SStr* sstr_string, const char* string) __attribute__((__nonnull__(1, 2)));
 
   struct
   {
-    char*  (*data)     (SStr* sstr_string);
-    size_t (*length)   (SStr* sstr_string);
-    size_t (*capacity) (SStr* sstr_string);
+    char*  (*data)     (SStr* sstr_string)                      __attribute__((__nonnull__(1)));
+    size_t (*length)   (SStr* sstr_string)                      __attribute__((__nonnull__(1)));
+    size_t (*capacity) (SStr* sstr_string)                      __attribute__((__nonnull__(1)));
   } get;
 
   struct
   {
-    void (*chr) (SStr* sstr_string, int character);
-    void (*str) (SStr* sstr_string, char* string);
+    void (*chr) (SStr* sstr_string, int character)              __attribute__((__nonnull__(1)));
+    void (*str) (SStr* sstr_string, char* string)               __attribute__((__nonnull__(1, 2)));
   } append;
 
 } SStrFn_interface;
@@ -55,14 +55,14 @@ typedef struct
 // Function prototypes.
 static SStr*         SStrFn_New          (void);
 static int8_t        SStrFn_Error        (void);
-static void          SStrFn_Destroy      (SStr* sstr_string);
-static char*         SStrFn_get_data     (SStr* sstr_string);
-static void          SStrFn_clear_data   (SStr* sstr_string);
-static inline size_t SStrFn_get_length   (SStr* sstr_string);
-static inline size_t SStrFn_get_capacity (SStr* sstr_string);
-static void          SStrFn_copy         (SStr* sstr_string, const char* string);
-static void          SStrFn_append_chr   (SStr* sstr_string, int character);
-static void          SStrFn_append_str   (SStr* sstr_string, char* string);
+static void          SStrFn_Destroy      (SStr* sstr_string)                     __attribute__((__nonnull__(1)));
+static void          SStrFn_clear_data   (SStr* sstr_string)                     __attribute__((__nonnull__(1)));
+static void          SStrFn_copy         (SStr* sstr_string, const char* string) __attribute__((__nonnull__(1, 2)));
+static char*         SStrFn_get_data     (SStr* sstr_string)                     __attribute__((__nonnull__(1)));
+static inline size_t SStrFn_get_length   (SStr* sstr_string)                     __attribute__((__nonnull__(1)));
+static inline size_t SStrFn_get_capacity (SStr* sstr_string)                     __attribute__((__nonnull__(1)));
+static void          SStrFn_append_chr   (SStr* sstr_string, int character)      __attribute__((__nonnull__(1)));
+static void          SStrFn_append_str   (SStr* sstr_string, char* string)       __attribute__((__nonnull__(1, 2)));
 
 
 SStrFn_interface SStrFn = {
