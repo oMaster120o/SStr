@@ -3,7 +3,7 @@ SafeStrings library for the C programming language.
   
 The SafeStrings library was created for the purpose of not needing to always write safe strings from scratch in every C project.
   
-For testing is recommended to use the SStrWithDebugInfo version and then using the version without Debug values, the Debug can be enabled by uncommenting the `//#define SSTR_DEBUG` line on the SStr.c file.
+For testing is recommended to use the SStrWithDebugInfo version and then using the version without the Debug info, the Debug can be enabled by uncommenting the `//#define SSTR_DEBUG` line on the SStr.c file.
   
 # Table of contents.  
 [Instalation](#Instalation)  
