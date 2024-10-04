@@ -12,7 +12,7 @@ typedef struct
   // Creates a new SStr.
   SStr*    (*New)        (void);
 
-  // If any error occured, prints message and return 1.
+  // If any error occured, prints the Error message and return 1.
   int8_t   (*Error)      (void);
 
   // Destroy a SStr;
@@ -22,7 +22,7 @@ typedef struct
 
   // Clear the data from SStr:
   //   SStr* sstr_string;
-  //   SStrFn.copy(sstr_string, "example");
+  //   SStrFn.clear_data(sstr_string);
   //   SStrFn.clear_data(sstr_string);
   void     (*clear_data) (SStr* sstr_string);
 
@@ -35,7 +35,7 @@ typedef struct
   struct
   {
 
-    // Changes the data from SStr:
+    // Returns the data from SStr:
     //   SStr* sstr_string;
     //   SStrFn.get_data(sstr_string);
     char*  (*data)      (SStr* sstr_string);
