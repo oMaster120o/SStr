@@ -43,7 +43,7 @@ The SStr type has the following values:
 ```
   
 Each of these values cannot be accessed directly to read, write them you need to use a SStrFn **(Safe String Function)**.  
-To read any of these valuess you can use the following:
+To read any of these values you can use the following:
   
 ```c
 SStrFn.get.data(my_sstr);
@@ -62,7 +62,7 @@ Suppose the project structure looks like the following:
       /SStr.c
 ```
   
-To create a new SStr and use SStr Functions first import SStr.h header into your your project:
+To create a new SStr and use SStr Functions first import SStr.h header into your project:
   
 `#include "./SStr/SStr.h"`
   
