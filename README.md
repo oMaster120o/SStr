@@ -8,8 +8,8 @@ For usage is recommended to use the SStrWithDebugInfo version and then using the
 # Table of contents.  
 [Instalation](#Instalation)  
 [Usage](#Usage)  
- - [SStr structure](#SStr structure)
- - [Creating a new SStr](#Creating a new SStr)
+- [SStr structure](#SStr structure)
+- [Creating a new SStr](#Creating a new SStr)
   
   
 # Instalation  
@@ -44,9 +44,9 @@ Suppose the project structure looks like the following:
       /SStr.c
 ```
   
-To create a new SStr and using SStr Functions first import SStr.h file into your file:
+To create a new SStr and use SStr Functions first import SStr.h header into your your project:
   
-`c#include "./SStr/SStr.h"`
+`#include "./SStr/SStr.h"`
   
 > [!CAUTION]  
 > do not include SStr.c directly into the project, but only SStr.h.  
@@ -84,21 +84,24 @@ int main()
       SStr* my_sstr = SStrFn.New();
       if (SStrFn.Error()) return -1; // if SStrFn.New() fails an error is generated and SStrFn.Error() returns 1.
 
-      SStr* second  = SStrFn.New();
+      SStr* my_second_sstr  = SStrFn.New();
       if (SStrFn.Error()) return -1; // if SStrFn.New() fails an error is generated and SStrFn.Error() returns 1.
+
+
 
       // with a literal string.
       SStrFn.copy(my_sstr, "Example string.");
       if (SStrFn.Error()) return -1; // if SStrFn.copy() fails an error is generated and SStrFn.Error() returns 1.
 
+
       // from a variable.
-      char* example_string = "Source string";
-      SStrFn.copy(second,  example_string);
+      char* example_string = "Second string";
+      SStrFn.copy(my_second_sstr,  example_string);
       if (SStrFn.Error()) return -1; // if SStrFn.copy() fails an error is generated and SStrFn.Error() returns 1.
 
 
       // from another SStr.
-      SStrFn.copy(second, SStrFn.get.data(my_sstr));
+      SStrFn.copy(my_second_sstr, SStrFn.get.data(my_sstr));
       if (SStrFn.Error()) return -1; // if SStrFn.copy() fails an error is generated and SStrFn.Error() returns 1.
 
       return 0;
@@ -114,9 +117,12 @@ Appending a char:
   SStr* my_sstr = SStrFn.New();
   if (SStrFn.Error()) return -1; // if SStrFn.New() fails an error is generated and SStrFn.Error() returns 1.
 
+
+
   // appending a char directly.
   SStrFn.append.chr(my_sstr, 'A');
   if (SStrFn.Error()) return -1; // if SStrFn.append.chr() fails an error is generated and SStrFn.Error() returns 1.
+
 
   // appending a char from a variable.
   char my_char = 'A';
@@ -134,12 +140,16 @@ Appending a string:
   SStr* my_sstr = SStrFn.New();
   if (SStrFn.Error()) return -1; // if SStrFn.New() fails an error is generated and SStrFn.Error() returns 1.
 
+
+
   // appending a literal string.
   SStrFn.append.str(my_sstr, "example literal string.");
   if (SStrFn.Error()) return -1; // if SStrFn.append.str() fails an error is generated and SStrFn.Error() returns 1.
 
+
   // appending a string from a variable.
   char* my_string = "Example string.";
+
   SStrFn.append.str(my_sstr, my_string);
   if (SStrFn.Error()) return -1; // if SStrFn.append.str() fails an error is generated and SStrFn.Error() returns 1.
 ```
