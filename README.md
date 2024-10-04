@@ -3,13 +3,23 @@ SafeStrings library for the C programming language.
   
 The SafeStrings library was created for the purpose of not needing to always write safe strings from scratch in every C project.
   
-For usage is recommended to use the SStrWithDebugInfo version and then using the version without Debug values, the Debug can be enabled by uncommenting the `//#define SSTR_DEBUG` line on the SStr.c file.
+For testing is recommended to use the SStrWithDebugInfo version and then using the version without Debug values, the Debug can be enabled by uncommenting the `//#define SSTR_DEBUG` line on the SStr.c file.
   
 # Table of contents.  
 [Instalation](#Instalation)  
 [Usage](#Usage)  
-- [SStr structure](#SStr structure)
-- [Creating a new SStr](#Creating a new SStr)
+ - [SStr structure](##SStr structure)
+ - [Creating a new SStr](##Creating a new SStr)
+ - [Writting to the data](##Writting to the data)
+ -     [overwrite](###overwrite)
+ -     [Appending data](###Appending data)
+ -         [Appending a char](####Appending a char)
+ -         [Appending a string](####Appending a string)
+  
+  
+  
+  
+  
   
   
 # Instalation  
@@ -119,7 +129,7 @@ int main()
 ### Appending data
   
   
-Appending a char:
+#### Appending a char
   
 ```c
   SStr* my_sstr = SStrFn.New();
@@ -142,7 +152,7 @@ Appending a char:
 ```
   
   
-Appending a string:
+#### Appending a string
   
 ```c
   SStr* my_sstr = SStrFn.New();
