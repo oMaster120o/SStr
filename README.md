@@ -15,7 +15,7 @@ For testing is recommended to use the SStrWithDebugInfo version and then using t
   - [Appending data](###Appending-data)
     - [Appending a char](####Appending-a-char)
     - [Appending a string](####Appending-a-string)
-  
+- [Compiling](##Compiling)
   
   
   
