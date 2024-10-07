@@ -7,6 +7,7 @@
 #define SSTR_ERROR_COLOR  "\e[38;2;255;0;0m"
 
 
+
 typedef struct
 {
   char*            data;     // The actual string.
@@ -124,6 +125,12 @@ static char* SStrFn_get_data(SStr* sstr_string)
 
 static void SStrFn_clear_data(SStr* sstr_string)
 {
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_clear_data: Given argument is NULL.");
+      return;
+    }
+
     SStr* REF = sstr_string;
 
     // replace all the data with '\0'.
@@ -145,7 +152,6 @@ static void SStrFn_clear_data(SStr* sstr_string)
     }
 
     REF->data = temp_address;
-
     return;
 }
 
@@ -164,6 +170,12 @@ static inline size_t SStrFn_get_capacity(SStr* sstr_string)
 
 static void SStrFn_copy(SStr* sstr_string, const char* string)
 {
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_clear_data: Given argument is NULL.");
+      return;
+    }
+
     SStr*  REF = sstr_string;
 
     size_t _string_len = strlen(string); // string minus null terminator
@@ -192,6 +204,7 @@ static void SStrFn_copy(SStr* sstr_string, const char* string)
     }
 
 
+
     // copy the contents of the string to the REF->data.
     for (register size_t i = 0; i < _string_len; i++)
     {
@@ -208,6 +221,12 @@ static void SStrFn_copy(SStr* sstr_string, const char* string)
 
 static void SStrFn_append_chr(SStr* sstr_string, int character)
 {
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_clear_data: Given argument is NULL.");
+      return;
+    }
+
     if (character == '\0')
     {
       return;
@@ -235,6 +254,7 @@ static void SStrFn_append_chr(SStr* sstr_string, int character)
     }
 
 
+
     // if realloc succeeds, copy the temporary address to REF->data.
     REF->data = temp_address;
     REF->data[REF->length] = character;
@@ -246,7 +266,14 @@ static void SStrFn_append_chr(SStr* sstr_string, int character)
 
 static void SStrFn_Destroy(SStr* sstr_string)
 {
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_Destroy: Given argument is NULL.");
+      return;
+    }
+
     SStr* REF = sstr_string;
+
 
     for (register size_t indx = REF->length; indx > 0; indx--)
     {
@@ -259,7 +286,8 @@ static void SStrFn_Destroy(SStr* sstr_string)
     free(REF->data);
     free(REF);
 
-    REF = NULL;
+    REF->data = NULL;
+    REF       = NULL;
 
     return;
 }
@@ -267,8 +295,15 @@ static void SStrFn_Destroy(SStr* sstr_string)
 
 static void SStrFn_append_str(SStr* sstr_string, char* string)
 {
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_append_str: Given argument is NULL.");
+      return;
+    }
+
     SStr*  REF        = sstr_string;
     size_t total_size = (REF->length + strlen(string));
+
 
     if (total_size >= REF->capacity)
     { //                            double the default capacity here,
@@ -276,7 +311,7 @@ static void SStrFn_append_str(SStr* sstr_string, char* string)
       REF->capacity = (total_size + DEFAULT_CAPACITY * 2);
 
       char* temp_address = (char*)realloc(REF->data, REF->capacity * sizeof(char));
-      
+
       if (!temp_address)
       {
           REF->length   = 0;
@@ -287,6 +322,7 @@ static void SStrFn_append_str(SStr* sstr_string, char* string)
       }
 
       REF->data = temp_address;
+
     }
 
     for (register size_t indx = 0; indx < strlen(string); indx++)

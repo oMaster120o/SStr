@@ -83,7 +83,30 @@ int main()
 
   printf("=====================\n"
          "NO CRASH HAS HAPPENED\n"
-         "=====================\n\n");
+         "=====================\n\n\n"
+
+         "PROTECTION FROM USING DESTROYED SStr VARIABLE TEST:\n");
+
+  SStrFn.Destroy(my_sstr);
+  if (SStrFn.Error()) return 0;
+
+
+  SStrFn.clear_data(my_sstr);
+  if (SStrFn.Error()) return 0;
+
+  SStrFn.copy(my_sstr, "PROTECTION ");
+  if (SStrFn.Error()) return 0;
+
+  SStrFn.append.str(my_sstr, "FAILED.");
+  if (SStrFn.Error()) return 0;
+
+  SStrFn.Destroy(my_sstr);
+  if (SStrFn.Error()) return 0;
+
+  printf("data: %s\n",          SStrFn.get.data(my_sstr));
+  printf("length: %lu\n",       SStrFn.get.length(my_sstr));
+  printf("capacity: %lu\n\n\n", SStrFn.get.capacity(my_sstr));
+
   return 0;
 }
 

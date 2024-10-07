@@ -148,6 +148,12 @@ static void SStrFn_clear_data(SStr* sstr_string)
     assert(sstr_string != NULL);
 #endif
 
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_clear_data: Given argument is NULL.");
+      return;
+    }
+
     SStr* REF = sstr_string;
 
 #ifdef SSTR_DEBUG
@@ -212,6 +218,12 @@ static void SStrFn_copy(SStr* sstr_string, const char* string)
     assert(sstr_string != NULL);
     assert(string != NULL);
 #endif
+
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_clear_data: Given argument is NULL.");
+      return;
+    }
 
     SStr*  REF = sstr_string;
 
@@ -287,6 +299,12 @@ static void SStrFn_append_chr(SStr* sstr_string, int character)
     assert(sstr_string != NULL);
 #endif
 
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_clear_data: Given argument is NULL.");
+      return;
+    }
+
     if (character == '\0')
     {
       return;
@@ -344,7 +362,14 @@ static void SStrFn_Destroy(SStr* sstr_string)
     assert(sstr_string != NULL);
 #endif
   
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_Destroy: Given argument is NULL.");
+      return;
+    }
+
     SStr* REF = sstr_string;
+
 
     for (register size_t indx = REF->length; indx > 0; indx--)
     {
@@ -357,7 +382,8 @@ static void SStrFn_Destroy(SStr* sstr_string)
     free(REF->data);
     free(REF);
 
-    REF = NULL;
+    REF->data = NULL;
+    REF       = NULL;
 
     return;
 }
@@ -374,8 +400,15 @@ static void SStrFn_append_str(SStr* sstr_string, char* string)
     printf("old capacity:%lu\n\n",   sstr_string->capacity);
 #endif
 
+    if (sstr_string->data == NULL)
+    {
+      SET_ERROR("SStrFn_append_str: Given argument is NULL.");
+      return;
+    }
+
     SStr*  REF        = sstr_string;
     size_t total_size = (REF->length + strlen(string));
+
 
     if (total_size >= REF->capacity)
     { //                            double the default capacity here,
