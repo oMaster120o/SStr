@@ -6,7 +6,7 @@ The SafeStrings library was created for the purpose of not needing to always wri
 For testing is recommended to use the SStrWithDebugInfo version and then using the version without the Debug info, the Debug can be enabled by uncommenting the `//#define SSTR_DEBUG` line on the SStr.c file.
   
 # Table of contents.  
-[Instalation](#Instalation)  
+[Installation](#Installation)  
 [Usage](#Usage)  
 - [SStr structure](#SStr-structure)
 - [Creating a new SStr](#Creating-a-new-SStr)
@@ -22,7 +22,7 @@ For testing is recommended to use the SStrWithDebugInfo version and then using t
   
   
   
-# Instalation  
+# Installation  
 Clone the repository into your project and start using.
   
 `git clone https://github.com/oMaster120o/SStr`  
