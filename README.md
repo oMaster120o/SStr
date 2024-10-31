@@ -181,12 +181,12 @@ int main()
   
 ## Compiling
   
-to compile a project using the library, first it needs to be compiled as an object file, exactly as from /SStr/test/Makefile does. Must also use -Wnonnull compiler flag:
+to compile a project using the library, first it needs to be compiled as an object file, exactly as from /SStr/test/Makefile does. Must also use -Wnonnull and -pthread compiler flag:
   
 ```
 CC = gcc
 OUTPUT = Test
-CFLAGS = -Wnonnull
+CFLAGS = -Wnonnull -pthread
 
 all: SStr.o tests.o
 	@${CC} tests.o SStr.o -o ${OUTPUT} ${CFLAGS}
@@ -196,5 +196,5 @@ tests.o:
 	@${CC} -c tests.c
 
 SStr.o:
-	@${CC} -c ../SStr.c
+	@${CC} -c ../SStr.c -pthread
 ```

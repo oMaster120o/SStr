@@ -1,6 +1,6 @@
 CC = gcc
 OUTPUT = Test
-CFLAGS = -Wnonnull
+CFLAGS = -Wnonnull -pthread
 
 all: SStr.o tests.o
 	@${CC} tests.o SStr.o -o ${OUTPUT} ${CFLAGS}
@@ -10,4 +10,4 @@ tests.o:
 	@${CC} -c tests.c
 
 SStr.o:
-	@${CC} -c ../SStr.c
+	@${CC} -c ../SStr.c -pthread
