@@ -1,3 +1,4 @@
+#include "SStr.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -8,7 +9,7 @@
 #define SSTR_ERROR_COLOR  "\e[38;2;255;0;0m"
 
 
-typedef struct
+struct SStr
 {
   char*            data;     // The actual string.
   volatile size_t  length;   // The string length.
@@ -16,32 +17,7 @@ typedef struct
 
   pthread_mutex_t  mutex;
 
-} SStr;
-
-
-typedef struct
-{
-  SStr*   (*New)        (void);
-  int8_t  (*Error)      (void);
-  void    (*Destroy)    (SStr** sstr_string);
-
-  void    (*clear_data) (SStr* sstr_string);
-  void    (*copy)       (SStr* sstr_string, const char* string) __attribute__((__nonnull__(2)));
-
-  struct
-  {
-    char*  (*data)     (SStr* sstr_string);
-    size_t (*length)   (SStr* sstr_string);
-    size_t (*capacity) (SStr* sstr_string);
-  } get;
-
-  struct
-  {
-    void (*chr) (SStr* sstr_string, int character);
-    void (*str) (SStr* sstr_string, char* string)               __attribute__((__nonnull__(2)));
-  } append;
-
-} SStrFn_interface;
+};
 
 
 
@@ -58,7 +34,7 @@ static void          SStrFn_append_chr   (SStr* sstr_string, int character);
 static void          SStrFn_append_str   (SStr* sstr_string, char* string)       __attribute__((__nonnull__(2)));
 
 
-SStrFn_interface SStrFn = {
+struct SStrFn SStrFn = {
 
   .New          = SStrFn_New,
   .Error        = SStrFn_Error,
@@ -75,8 +51,6 @@ SStrFn_interface SStrFn = {
   .append.str   = SStrFn_append_str,
 
 };
-
-
 
 
 

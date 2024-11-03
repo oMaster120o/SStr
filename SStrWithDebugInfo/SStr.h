@@ -3,11 +3,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-extern char* SSTR_ERROR;
 
 typedef struct SStr SStr;
 
-typedef struct
+extern struct SStrFn
 {
   // Creates a new SStr.
   SStr*    (*New)        (void);
@@ -62,8 +61,6 @@ typedef struct
 
   } append;
 
-} SStrFn_interface;
+} SStrFn;
 
-
-extern SStrFn_interface SStrFn;
 #endif
